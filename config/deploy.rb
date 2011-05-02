@@ -8,6 +8,7 @@ set :repository, 'root@scribe:racepro-bundle'
 set :branch, 'master'
 set :user, 'racepro'
 set :scm_verbose, true
+set :git_enable_submodules, true
 
 set :deploy_via, :remote_cache
 set :deploy_to, "/srv/#{application}"

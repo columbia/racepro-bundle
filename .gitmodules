@@ -1,0 +1,9 @@
+[submodule "linux-2.6-scribe"]
+	path = linux-2.6-scribe
+	url = git://github.com/nviennot/linux-2.6-scribe.git
+[submodule "libscribe"]
+	path = libscribe
+	url = git://github.com/nviennot/libscribe.git
+[submodule "py-scribe"]
+	path = py-scribe
+	url = git://github.com/nviennot/py-scribe.git
