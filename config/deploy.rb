@@ -7,10 +7,11 @@ set :scm, :git
 set :repository, 'root@scribe:racepro-bundle'
 set :branch, 'master'
 set :user, 'racepro'
-set :deploy_via, :remote_cache
 set :scm_verbose, true
 
+set :deploy_via, :remote_cache
 set :deploy_to, "/srv/#{application}"
+set :keep_releases, 5
 
 role :racepro, 'racepro'
 
@@ -32,8 +33,22 @@ namespace :bootstrap do
     users.each { |user| sudo "chown -R #{user}: /home/#{user}" }
   end
 
-  desc 'bootstrap the application'
+  task :packages do
+    sudo "apt-get -q -y install git-core vim-nox"
+  end
+
+  desc 'bootstrap the server'
   task :default do
     users
+    packages
+    deploy.setup
   end
+end
+
+namespace :deploy do
+  task :fix_permissions do
+    sudo "chown #{user} -R #{deploy_to}"
+  end
+
+  after "deploy:setup", "deploy:fix_permissions"
 end
