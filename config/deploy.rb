@@ -38,10 +38,15 @@ namespace :bootstrap do
     sudo "apt-get -q -y install git-core vim-nox"
   end
 
+  task :known_hosts do
+    run "ssh -o StrictHostKeyChecking=no root@scribe true"
+  end
+
   desc 'bootstrap the server'
   task :default do
     users
     packages
+    known_hosts
     deploy.setup
   end
 end
@@ -50,6 +55,5 @@ namespace :deploy do
   task :fix_permissions do
     sudo "chown #{user} -R #{deploy_to}"
   end
-
   after "deploy:setup", "deploy:fix_permissions"
 end
